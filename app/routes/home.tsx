@@ -6,13 +6,34 @@ export const clientLoader = async () => {
   return data;
 }
 
-export default function Home({ loaderData }) {
+export default function Home({ loaderData }: Route.ComponentProps) {
 
   const { meals } = loaderData;
   console.log(meals);
 
   return (
-    <h1>Code & Cook</h1>
-    
+    <>
+      <header className="site-header">
+        <h1 className="site-header__title">Code &amp; Cook</h1>
+        <p className="site-header__subtitle">Discover delicious recipes from around the world</p>
+      </header>
+      <main className="meals-container">
+        <ul className="meals-grid">
+          {meals.map((meal, index) => (
+            <li key={index} className="meal-card">
+              <img
+                src={meal.strMealThumb}
+                alt={meal.strMeal}
+                className="meal-card__img"
+              />
+              <div className="meal-card__body">
+                <h2 className="meal-card__title">{meal.strMeal}</h2>
+                <span className="meal-card__category">{meal.strCategory}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </>
   );
 }
