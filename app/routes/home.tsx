@@ -1,13 +1,18 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+export const clientLoader = async () => {
+  const response = await fetch("https://themealdb.com/api/json/v1/1/search.php?f=a");
+  const data = await response.json();
+  return data;
 }
 
-export default function Home() {
-  return <Welcome />;
+export default function Home({ loaderData }) {
+
+  const { meals } = loaderData;
+  console.log(meals);
+
+  return (
+    <h1>Code & Cook</h1>
+    
+  );
 }
