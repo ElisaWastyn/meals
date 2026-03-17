@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Route } from "./+types/home";
+import { Link } from "react-router";
 
 export const clientLoader = async () => {
   const response = await fetch("https://themealdb.com/api/json/v1/1/search.php?f=a");
