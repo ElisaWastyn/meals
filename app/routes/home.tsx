@@ -1,4 +1,5 @@
 import type { Route } from "./+types/home";
+import { Link } from "react-router";
 
 export const clientLoader = async () => {
   const response = await fetch("https://themealdb.com/api/json/v1/1/search.php?f=a");
@@ -6,7 +7,7 @@ export const clientLoader = async () => {
   return data;
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+export default function Home({ loaderData }) {
 
   const { meals } = loaderData;
   console.log(meals);
@@ -21,15 +22,17 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         <ul className="meals-grid">
           {meals.map((meal, index) => (
             <li key={index} className="meal-card">
-              <img
-                src={meal.strMealThumb}
-                alt={meal.strMeal}
-                className="meal-card__img"
-              />
-              <div className="meal-card__body">
-                <h2 className="meal-card__title">{meal.strMeal}</h2>
-                <span className="meal-card__category">{meal.strCategory}</span>
-              </div>
+              <Link to={`/details/${meal.idMeal}`} className="meal-card__link">
+                <img
+                  src={meal.strMealThumb}
+                  alt={meal.strMeal}
+                  className="meal-card__img"
+                />
+                <div className="meal-card__body">
+                  <h2 className="meal-card__title">{meal.strMeal}</h2>
+                  <span className="meal-card__category">{meal.strCategory}</span>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
