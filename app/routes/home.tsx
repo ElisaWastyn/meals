@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
 
@@ -7,10 +8,19 @@ export const clientLoader = async () => {
   return data;
 }
 
-export default function Home({ loaderData }) {
+const Home = ({ loaderData }) => {
 
-  const { meals } = loaderData;
-  console.log(meals);
+  const meals = loaderData?.meals || [];
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredMeals = meals.filter((meal) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      meal.strMeal.toLowerCase().includes(searchLower) ||
+      (meal.strCategory && meal.strCategory.toLowerCase().includes(searchLower)) ||
+      (meal.strArea && meal.strArea.toLowerCase().includes(searchLower))
+    );
+  });
 
   return (
     <>
@@ -19,10 +29,21 @@ export default function Home({ loaderData }) {
         <p className="site-header__subtitle">Discover delicious recipes from around the world</p>
       </header>
       <main className="meals-container">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search meals by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
         <ul className="meals-grid">
-          {meals.map((meal, index) => (
-            <li key={index} className="meal-card">
-              <Link to={`/details/${meal.idMeal}`} className="meal-card__link">
+          {filteredMeals.length === 0 ? (
+            <p className="no-results">No meals found matching your search.</p>
+          ) : (
+            filteredMeals.map((meal, index) => (
+              <li key={index} className="meal-card">
                 <img
                   src={meal.strMealThumb}
                   alt={meal.strMeal}
@@ -31,12 +52,15 @@ export default function Home({ loaderData }) {
                 <div className="meal-card__body">
                   <h2 className="meal-card__title">{meal.strMeal}</h2>
                   <span className="meal-card__category">{meal.strCategory}</span>
+                  <span className="meal-card__area">{meal.strArea}</span>
                 </div>
-              </Link>
-            </li>
-          ))}
+              </li>
+            ))
+          )}
         </ul>
       </main>
     </>
   );
 }
+
+export default Home;

@@ -38,6 +38,30 @@ body {
 }
 
 /* ── Meals container ─────────────────────────────── */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 1.1rem;
+  background: #f9fafb;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 4px 16px rgba(249,115,22,0.08);
+}
 .meals-container {
   max-width: 1200px;
   margin: 0 auto;
