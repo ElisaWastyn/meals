@@ -44,16 +44,18 @@ const Home = ({ loaderData }) => {
           ) : (
             filteredMeals.map((meal, index) => (
               <li key={index} className="meal-card">
-                <img
-                  src={meal.strMealThumb}
-                  alt={meal.strMeal}
-                  className="meal-card__img"
-                />
-                <div className="meal-card__body">
-                  <h2 className="meal-card__title">{meal.strMeal}</h2>
-                  <span className="meal-card__category">{meal.strCategory}</span>
-                  <span className="meal-card__area">{meal.strArea}</span>
-                </div>
+                <Link to={`/details/${meal.idMeal}`} className="meal-card__link">
+                  <img
+                    src={meal.strMealThumb}
+                    alt={meal.strMeal}
+                    className="meal-card__img"
+                  />
+                  <div className="meal-card__body">
+                    <h2 className="meal-card__title">{meal.strMeal}</h2>
+                    <span className="meal-card__category">{meal.strCategory}</span>
+                    <span className="meal-card__area">{meal.strArea}</span>
+                  </div>
+                </Link>
               </li>
             ))
           )}
